@@ -43,17 +43,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // code to add the new contact
-    void addContact(Contact contact) {
+    int addContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+        long resultID = -1;
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getName()); // Contact Name
         values.put(KEY_PH_NO, contact.getPhoneNumber()); // Contact Phone
 
-        // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
+        // Inserting Row (returns the id)
+        resultID = db.insert(TABLE_CONTACTS, null, values);
         //2nd argument is String containing nullColumnHack
         db.close(); // Closing database connection
+        return (int) resultID;
     }
 
     // code to get the single contact by id
@@ -133,6 +134,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
                 new String[]{String.valueOf(contact.getID())});
+        db.close();
+    }
+
+    // Deleting single contact
+    public void deleteContactByID(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, KEY_ID + " = ?", new String[]{id});
         db.close();
     }
 
