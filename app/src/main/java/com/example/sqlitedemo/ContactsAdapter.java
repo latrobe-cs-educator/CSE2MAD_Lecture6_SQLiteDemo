@@ -17,8 +17,8 @@ import java.util.List;
 // Note that we specify the custom ViewHolder which gives us access to our views
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHolder> {
 
+    //The interface and listeners are only required if you are using the buttons in the recycler
     private OnItemClickListener mListener;
-
     public interface OnItemClickListener {
         void onDeleteClick(int position);
         void onEditClick(int position);
@@ -85,6 +85,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             nameTextView = (TextView) itemView.findViewById(R.id.nameTV);
             idTextView = (TextView) itemView.findViewById(R.id.idTV);
             phoneTextView = (TextView) itemView.findViewById(R.id.phoneTV);
+
+            //This code below is only required if you are using the buttons (edit delete) in the recyclerview
             deleteButton= (ImageButton) itemView.findViewById(R.id.deleteBtn);
             editButton= (ImageButton) itemView.findViewById(R.id.editBtn);
 

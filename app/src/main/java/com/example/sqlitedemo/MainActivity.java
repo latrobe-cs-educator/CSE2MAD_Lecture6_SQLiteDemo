@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //This method is only required if you have an add user button it opens a dialog that can be used to add a contact
     public void addContact(View v) {
         //Much of this code can be inlined, I just kept it step by step to be clear
         // Create an alert builder
@@ -104,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //This method is only required if you are using the buttons (edit delete) in the recyclerview
     public void editContact(final int position) {
         //get the contact object to edit so we can extract ID
         final Contact editContact = contacts.get(position);
@@ -112,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
         // Create an alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setTitle("Add Contact"); optional
-
-        // set the custom layout
+        // set the custom layout xml for dialog
         final View customLayout
                 = getLayoutInflater()
                 .inflate(
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         EditText phoneEditText = (EditText) customLayout.findViewById(R.id.contactPhIn);
         phoneEditText.setHint("Phone No: " + editContact.getPhoneNumber());
 
-        // add a button
+        // add buttons to the dialog
         builder.setPositiveButton(
                 "APPLY",
                 new DialogInterface.OnClickListener() {
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //This method is only required if you are using the buttons (edit delete) in the recyclerview
     public void deleteContact(int position) {
         //get the contact object to delete so we can extract ID
         Contact deleteContact = contacts.get(position);
@@ -183,8 +185,8 @@ public class MainActivity extends AppCompatActivity {
 
     //Recycler view creation & setup
     private void rvSetup(DatabaseHandler db, RecyclerView rvContacts) {
+        //get List of contacts in database
         contacts = db.getAllContacts();
-        // Initialize contacts
         // Create adapter passing in the sample user data
         adapter = new ContactsAdapter(contacts);
         // Attach the adapter to the recyclerview to populate items
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
 
+        //implement the buttons in recyclerview(only required if you have buttons)
         adapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
             @Override
             public void onDeleteClick(int position) {
